@@ -78,7 +78,7 @@ async function sendWebhookMessage(name, rating) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                content: `<@682809931321049096>`,
+                content: ``,
                 embeds: [embed]
             })
         });
