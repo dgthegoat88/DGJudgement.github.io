@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate DG's Judgement</title>
+    <meta property="og:title" content="Rate DG's Judgement">
+    <meta property="og:description" content="Click here to rate DG's judgement!">
+    <meta property="og:url" content="https://ratedg.site/">
+    <meta property="og:type" content="website">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: white;
+        }
+        .container {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.6); /* Default shadow */
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px red, 0 0 20px orange, 0 0 30px yellow, 0 0 40px green, 0 0 50px cyan, 0 0 60px blue, 0 0 70px violet;
+            }
+            100% {
+                box-shadow: 0 0 20px red, 0 0 40px orange, 0 0 60px yellow, 0 0 80px green, 0 0 100px cyan, 0 0 120px blue, 0 0 140px violet;
+            }
+        }
+
+        input, button {
+            margin-top: 10px;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid #777;
+            background: #222;
+            color: white;
+        }
+
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 80%;
+            height: 6px;
+            background: #666;
+            border-radius: 3px;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #999;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Rate DG's Judgement</h2>
+        <input type="text" id="name" placeholder="Your Name">
+        <div class="slider-container">
+            <p>Rate 1-10</p>
+            <input type="range" id="rating" min="1" max="10" value="5" oninput="updateValue(this.value)">
+            <p id="ratingValue">5</p>
+        </div>
+        <button onclick="submitRating()">Submit</button>
+    </div>
+    
+    <script src="resources/protecc.js"></script>
+    <script>
+        function updateValue(value) {
+            document.getElementById('ratingValue').innerText = value;
+        }
+
+        function submitRating() {
+            const name = document.getElementById('name').value.trim() || "Anonymous";
+            if (/(@here|@everyone)/i.test(name)) {
+                alert("Invalid name: @here and @everyone are not allowed.");
+                return;
+            }
+            const rating = document.getElementById('rating').value;
+            
+            fetch('https://discord.com/api/webhooks/1338920061699883082/y66UMFcqug13XB9dafo3e_Xe_jBnlpuBixmGBtuqf55W5ay4jnZQ-k3SQyB3kKzkVtgk', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: `**${name}** rated DG: **${rating}/10** <@682809931321049096>`
+                })
+            }).then(() => alert('Rating submitted!'))
+              .catch(() => alert('Error submitting rating.'));
+        }
+    </script>
+</body>
+</html>
