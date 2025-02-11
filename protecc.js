@@ -69,7 +69,7 @@ async function sendWebhookMessage(name, rating) {
                 }
             ],
             footer: {
-                text: "DG's Judgement Rating System by Oracle"
+                text: ""
             },
             timestamp: new Date().toISOString()
         };
