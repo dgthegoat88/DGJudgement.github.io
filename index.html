@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate DG's Judgement</title>
+    <meta property="og:title" content="Rate DG's Judgement">
+    <meta property="og:description" content="Click here to rate DG's judgement!">
+    <meta property="og:url" content="https://ratedg.site/">
+    <meta property="og:type" content="website">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --background: #0a0f1c;
+            --card-bg: #131c31;
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            background-color: var(--background);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.08) 0px, transparent 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text);
+            perspective: 1000px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 440px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .container:hover {
+            transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
+            box-shadow: 
+                0 30px 60px -12px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.15);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-dim) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transform: translateZ(20px);
+        }
+
+        .input-group {
+            margin-bottom: 2.5rem;
+            position: relative;
+            transform: translateZ(10px);
+        }
+
+        .input-group::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .input-group:focus-within::after {
+            width: 100%;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .slider-container {
+            margin: 3rem 0;
+            transform: translateZ(15px);
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(to right, 
+                var(--primary) 0%, 
+                var(--primary) calc((var(--value) - 1) * (100% / 9)), 
+                rgba(255, 255, 255, 0.1) calc((var(--value) - 1) * (100% / 9))
+            );
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border: 3px solid var(--card-bg);
+            border-radius: 50%;
+            cursor: pointer;
+            margin-top: -9px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: var(--primary-light);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        #ratingValue {
+            font-size: 4rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+            margin: 1.5rem 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 1.25rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(20px);
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+            transform: translateZ(30px) scale(1.02);
+            box-shadow: 
+                0 10px 30px -10px rgba(59, 130, 246, 0.5),
+                0 0 0 1px rgba(59, 130, 246, 0.3);
+        }
+
+        button:active {
+            transform: translateZ(20px) scale(0.98);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .success-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: var(--success);
+            color: white;
+            border-radius: 12px;
+            font-weight: 500;
+            transform: translateX(200%);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.5);
+        }
+
+        .success-toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .error-toast {
+            background: var(--error);
+            box-shadow: 0 10px 30px -10px rgba(239, 68, 68, 0.5);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                var(--primary) 25%, 
+                var(--primary-light) 50%, 
+                var(--primary) 75%
+            );
+            background-size: 200% 100%;
+            border-radius: inherit;
+            animation: loading 1.5s infinite linear;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Rate DG's Judgement</h2>
+        <div class="input-group">
+            <input 
+                type="text" 
+                id="name" 
+                placeholder="Your Name" 
+                autocomplete="off"
+                maxlength="32"
+            >
+        </div>
+        <div class="slider-container">
+            <div class="slider-label">
+                <span>Poor</span>
+                <span>Excellent</span>
+            </div>
+            <input 
+                type="range" 
+                id="rating" 
+                min="1" 
+                max="10" 
+                value="5" 
+                oninput="updateValue(this.value)"
+                style="--value: 5"
+            >
+            <p id="ratingValue">5</p>
+        </div>
+        <button onclick="submitRating()" id="submitBtn">Submit Rating</button>
+    </div>
+
+    <script>
+        function updateValue(value) {
+            const element = document.getElementById('ratingValue');
+            const slider = document.getElementById('rating');
+            slider.style.setProperty('--value', value);
+
+            element.style.transform = 'scale(1.2) translateY(-10px)';
+            element.style.opacity = '0.5';
+            element.innerText = value;
+
+            setTimeout(() => {
+                element.style.transform = 'scale(1) translateY(0)';
+                element.style.opacity = '1';
+            }, 150);
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = `success-toast ${isError ? 'error-toast' : ''}`;
+            toast.innerText = message;
+            document.body.appendChild(toast);
+
+            requestAnimationFrame(() => toast.classList.add('show'));
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function validateInput(name) {
+            if (!name) return { valid: true, value: "Anonymous" };
+
+            const sanitized = name.replace(/<[^>]*>/g, '').trim();
+
+            if (/(@here|@everyone)/i.test(sanitized)) {
+                return { valid: false, error: "Invalid name: @here and @everyone are not allowed." };
+            }
+
+            return { valid: true, value: sanitized.slice(0, 32) };
+        }
+
+        let isSubmitting = false;
+
+        async function submitRating() {
+            if (isSubmitting) return;
+
+            const btn = document.getElementById('submitBtn');
+            const nameInput = document.getElementById('name');
+            const nameValidation = validateInput(nameInput.value.trim());
+
+            if (!nameValidation.valid) {
+                nameInput.classList.add('shake');
+                setTimeout(() => nameInput.classList.remove('shake'), 300);
+                showToast(nameValidation.error, true);
+                return;
+            }
+
+            const rating = document.getElementById('rating').value;
+
+            try {
+                isSubmitting = true;
+                btn.classList.add('loading');
+                btn.innerText = 'Submitting...';
+
+                await sendWebhookMessage(nameValidation.value, rating);
+
+                showToast('Rating submitted successfully!');
+                nameInput.value = '';
+
+            } catch (error) {
+                console.error('Submission error:', error);
+                showToast('Failed to submit rating. Please try again.', true);
+
+            } finally {
+                isSubmitting = false;
+                btn.classList.remove('loading');
+                btn.innerText = 'Submit Rating';
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            const container = document.querySelector('.container');
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateY = ((x - centerX) / centerX) * 5;
+            const rotateX = ((y - centerY) / centerY) * -5;
+
+            container.style.transform = `
+                translateY(-5px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+            `;
+        });
+
+        document.addEventListener('mouseleave', () => {
+            const container = document.querySelector('.container');
+            container.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (document.activeElement === document.getElementById('name')) {
+                    document.getElementById('rating').focus();
+                } else {
+                    submitRating();
+                }
+            }
+        });
+    </script>
+	<script src="protecc.js"></script>
+</body>
+</html>
